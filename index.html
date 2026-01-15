@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">IRON+ | متجر تطبيقات البلس والأكواد الرقمية 🦾</title>
+    <meta id="metaDescription" name="description" content="متجر ايرون بلس - تفعيل فوري تطبيقات بلس، فك حظر سناب، واشتراكات رقمية بأعلى استقرار وأمان ضد الحظر.">
+    <meta id="metaKeywords" name="keywords" content="سناب بلس, تيك توك بلس, فك حظر سناب, تطبيقات بلس, ايرون بلس, متجر بلس">
+    
+    <!-- Favicon ديناميكي -->
+    <link rel="icon" id="favicon" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- أنماط الصفحة -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/modern-v4.6.css">
+    <meta name="google-site-verification" content="QegjQvm7Yb0cgevqDNOdvujJba_tiKDz8TQbgmkXh64" />
+    <!-- Pixel Codes ديناميكية -->
+    <script id="googleAnalyticsScript"></script>
+    <script id="snapchatPixelScript"></script>
+    <script id="facebookPixelScript"></script>
+    <script id="twitterPixelScript"></script>
+</head>
+<body class="antialiased">
+    <!-- شريط الإعلانات المتحرك -->
+    <div id="announcementBar" class="announcement-bar bg-gradient-to-r from-[#9B111E] to-[#7A0D17] text-white text-center py-2 px-4 hidden">
+        <div class="container mx-auto">
+            <span id="announcementText"></span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-container sticky top-0 z-50">
+        <div class="container-spacing">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo ديناميكي -->
+                <div class="flex items-center gap-3">
+                    <div class="tech-font text-2xl">
+                        <span class="text-[#9B111E]">IRON</span>
+                        <span class="text-[#FFD700]">+</span>
+                    </div>
+                    <span class="text-xs px-2 py-1 rounded-full bg-[#9B111E]/10 text-[#9B111E] border border-[#9B111E]/20">
+                        v5.5
+                    </span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-sm font-medium hover:text-[#FFD700] transition-colors">الرئيسية</a>
+                    <a href="#products" class="text-sm font-medium hover:text-[#FFD700] transition-colors">الباقات</a>
+                    <a href="#features" class="text-sm font-medium hover:text-[#FFD700] transition-colors">المميزات</a>
+                    <a href="#faq" class="text-sm font-medium hover:text-[#FFD700] transition-colors">الأسئلة</a>
+                    <a href="#reviews" class="text-sm font-medium hover:text-[#FFD700] transition-colors">التقييمات</a>
+                </div>
+                
+                <!-- User Actions -->
+                <div class="flex items-center gap-4">
+                    <a href="login.html" id="loginButton" class="btn-secondary text-sm hidden md:block">
+                        <i class="fas fa-user ml-2"></i> تسجيل الدخول
+                    </a>
+                    <a href="cart.html" class="relative p-2">
+                        <i class="fas fa-shopping-bag text-lg"></i>
+                        <span id="cartCount" class="cart-count absolute -top-1 -right-1 bg-[#9B111E] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    </a>
+                    <div id="userInfo" class="hidden items-center gap-3">
+                        <div class="user-avatar">
+                            <i class="fas fa-user-astronaut"></i>
+                        </div>
+                        <div class="user-details">
+                            <span id="userPhone" class="text-[#FFD700] block font-bold text-sm"></span>
+                            <small class="text-gray-400 text-xs">مشترك نشط</small>
+                        </div>
+                    </div>
+                    <button id="mobileMenuBtn" class="md:hidden text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu">
+        <div class="flex justify-between items-center mb-8">
+            <div class="tech-font text-2xl">
+                <span class="text-[#9B111E]">IRON</span>
+                <span class="text-[#FFD700]">+</span>
+            </div>
+            <button id="closeMenuBtn" class="text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-6">
+            <a href="#home" class="text-lg font-medium py-2 border-b border-[#333]">الرئيسية</a>
+            <a href="#products" class="text-lg font-medium py-2 border-b border-[#333]">الباقات</a>
+            <a href="#features" class="text-lg font-medium py-2 border-b border-[#333]">المميزات</a>
+            <a href="#faq" class="text-lg font-medium py-2 border-b border-[#333]">الأسئلة</a>
+            <a href="#reviews" class="text-lg font-medium py-2 border-b border-[#333]">التقييمات</a>
+            <a href="login.html" id="mobileLoginButton" class="btn-primary mt-8">
+                <i class="fas fa-user ml-2"></i> تسجيل الدخول
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section مع بانر ديناميكي -->
+    <section id="home" class="section-spacing hero-gradient">
+        <div class="container-spacing">
+            <!-- البانر الديناميكي -->
+            <div id="heroBanner" class="mb-12 rounded-xl overflow-hidden shadow-2xl">
+                <!-- سيتم ملؤه عبر JavaScript -->
+            </div>
+            
+            <div class="max-w-3xl mx-auto text-center">
+                <!-- Value Proposition -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#9B111E]/10 border border-[#9B111E]/20 mb-8">
+                    <span class="text-[#9B111E] text-sm font-medium">تطبيقات البلس الرائدة</span>
+                    <span class="w-2 h-2 bg-[#FFD700] rounded-full"></span>
+                </div>
+                
+                <h1 class="tech-font text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    استمتع <span class="text-[#FFD700]">بتجربة متميزة</span><br> مع تطبيقات البلس
+                </h1>
+                
+                <p class="text-xl text-[#A0A0A0] mb-10 max-w-2xl mx-auto">
+                    تفعيل فوري، استقرار بلا حدود، ودعم فني متخصص. كل ما تحتاجه في منصة واحدة
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#products" class="btn-primary text-lg px-8 py-4">
+                        <i class="fas fa-rocket ml-2"></i> استعرض الباقات
+                    </a>
+                    <button class="btn-secondary text-lg px-8 py-4">
+                        <i class="fas fa-play-circle ml-2"></i> شاهد التعريف
+                    </button>
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div id="visitorCount" class="text-3xl font-bold text-[#FFD700] mb-2">13,655</div>
+                        <div class="text-sm text-[#A0A0A0]">عميل واثق</div>
+                    </div>
+                    <div class="text-center">
+                        <div id="orderCount" class="text-3xl font-bold text-[#FFD700] mb-2">3,101</div>
+                        <div class="text-sm text-[#A0A0A0]">طلبات ناجحة</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-[#FFD700] mb-2">5.0</div>
+                        <div class="text-sm text-[#A0A0A0]">تقييم متجر</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-[#FFD700] mb-2">24/7</div>
+                        <div class="text-sm text-[#A0A0A0]">دعم فني</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="section-spacing bg-[#111111]">
+        <div class="container-spacing">
+            <div class="text-center mb-16">
+                <h2 class="tech-font text-3xl md:text-4xl font-bold mb-4">باقاتنا المميزة</h2>
+                <p class="text-[#A0A0A0] text-lg max-w-2xl mx-auto">
+                    اختر من مجموعة واسعة من تطبيقات البلس المدفوعة بتفعيل فوري وضمان كامل
+                </p>
+            </div>
+            
+            <!-- Products Grid -->
+            <div id="productsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- المنتجات سيتم تحميلها هنا عبر JavaScript -->
+                <div class="col-span-4 text-center py-12">
+                    <div class="loading-spinner mx-auto"></div>
+                    <p class="text-gray-400 mt-4">جاري تحميل الباقات...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Middle Banner -->
+    <div id="middleBanner" class="container-spacing my-12">
+        <!-- سيتم ملؤه عبر JavaScript -->
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="section-spacing">
+        <div class="container-spacing">
+            <div class="text-center mb-16">
+                <h2 class="tech-font text-3xl md:text-4xl font-bold mb-4">لماذا IRON+؟</h2>
+                <p class="text-[#A0A0A0] text-lg max-w-2xl mx-auto">
+                    نقدم لك تجربة استثنائية بمعايير تقنية عالية
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="stat-card text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#9B111E]/10 flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-bolt text-2xl text-[#FFD700]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">تفعيل فوري</h3>
+                    <p class="text-[#A0A0A0]">
+                        استلام الكود خلال ثوانٍ معدودة بعد الدفع مباشرة، بدون أي انتظار
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="stat-card text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#9B111E]/10 flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shield-alt text-2xl text-[#FFD700]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">حماية ضد الحظر</h3>
+                    <p class="text-[#A0A0A0]">
+                        تطبيقاتنا مقاومة للحظر ومحدثة دائماً لآخر إصدار مع ضمان الاستقرار
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="stat-card text-center">
+                    <div class="w-16 h-16 rounded-full bg-[#9B111E]/10 flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-headset text-2xl text-[#FFD700]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">دعم فني 24/7</h3>
+                    <p class="text-[#A0A0A0]">
+                        فريق دعم فني متخصص متاح على مدار الساعة لحل أي مشكلة تواجهك
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section-spacing bg-[#111111]">
+        <div class="container-spacing max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="tech-font text-3xl md:text-4xl font-bold mb-4">أسئلة شائعة</h2>
+                <p class="text-[#A0A0A0] text-lg">
+                    إجابات على أكثر الأسئلة شيوعاً من عملائنا
+                </p>
+            </div>
+            
+            <div class="space-y-2">
+                <!-- FAQ Item 1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="font-bold text-lg">هل اشتراك IRON+ موثق وموثوق؟</span>
+                        <i class="fas fa-chevron-down text-[#FFD700] transition-transform"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="pt-2">
+                            نعم، نحن متجر موثق ونقدم ضمانات حقيقية على كافة الاشتراكات طوال فترة الصلاحية. جميع منتجاتنا خاضعة لفحص جودة واختبارات أمان قبل التوصيل، ونلتزم بشروط الضمان المذكورة في سياسة الاسترجاع.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="font-bold text-lg">كيف ومتى أستلم كود التفعيل؟</span>
+                        <i class="fas fa-chevron-down text-[#FFD700] transition-transform"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="pt-2">
+                            يتم تسليم الكود بشكل فوري وتلقائي بمجرد نجاح عملية الدفع. ستجده في صفحة "طلباتي" في حسابك، كما سنرسل لك إشعاراً على البريد الإلكتروني أو الواتساب بتفاصيل التفعيل. في 95% من الحالات يكون التفعيل خلال 30 ثانية من الدفع.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="font-bold text-lg">ماذا لو لم يعمل الكود أو واجهت مشكلة؟</span>
+                        <i class="fas fa-chevron-down text-[#FFD700] transition-transform"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="pt-2">
+                            نقدم ضمان استبدال أو استرجاع خلال 24 ساعة من الشراء. فقط راسل الدعم الفني عبر الواتساب أو الدردشة المباشرة، وسنقوم بحل المشكلة أو استبدال الكود فوراً. معدل رضا العملاء عن خدمة الدعم لدينا يتجاوز 98%.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span class="font-bold text-lg">هل تطبيقاتكم محدثة وآمنة؟</span>
+                        <i class="fas fa-chevron-down text-[#FFD700] transition-transform"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="pt-2">
+                            نعم، جميع تطبيقاتنا محدثة لآخر إصدار ومختبرة ضد الحظر. نعمل على تحديث قاعدة التطبيقات أسبوعياً لضمان الاستقرار والأمان. كما أننا نستخدم تقنيات حماية متقدمة لمنع الحظر أو التعطيل.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+<section id="reviews" class="section-spacing overflow-hidden">
+    <div class="container-spacing">
+        <div class="text-center mb-12">
+            <h2 class="tech-font text-3xl md:text-4xl font-bold mb-4">آراء عملائنا</h2>
+            <p class="text-[#A0A0A0] text-lg max-w-2xl mx-auto">
+                شهادات حقيقية من عملائنا الكرام في IRON+
+            </p>
+        </div>
+        
+        <div class="flex overflow-x-auto gap-6 pb-8 snap-x scrollbar-hide" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none;">
+            
+            <div class="snap-center shrink-0 w-[300px] stat-card">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#9B111E] to-[#FF4757] flex items-center justify-center text-white">
+                        <span class="font-bold">س</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">سعد العتيبي</h4>
+                        <div class="rating-stars text-sm text-[#FFD700]">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <span class="text-xs text-[#A0A0A0] mr-auto">يومين</span>
+                </div>
+                <p class="text-[#A0A0A0] text-sm leading-relaxed">
+                    "أفضل متجر تعاملت معه، التفعيل فوري والسناب شغال معي زي الحلاوة. الدعم الفني سريع ومحترف."
+                </p>
+            </div>
+            
+            <div class="snap-center shrink-0 w-[300px] stat-card">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#FFD700] to-[#FF9F1A] flex items-center justify-center text-black">
+                        <span class="font-bold">ن</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">نورة محمد</h4>
+                        <div class="rating-stars text-sm text-[#FFD700]">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <span class="text-xs text-[#A0A0A0] mr-auto">٥ أيام</span>
+                </div>
+                <p class="text-[#A0A0A0] text-sm leading-relaxed">
+                    "اشتريت باقة تيك توك بلس وكل شيء سلس. الكود وصل خلال ثواني والدعم رد علي حتى وقت متأخر."
+                </p>
+            </div>
+            
+            <div class="snap-center shrink-0 w-[300px] stat-card">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#00A8FF] to-[#0097E6] flex items-center justify-center text-white">
+                        <span class="font-bold">خ</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">خالد السبيعي</h4>
+                        <div class="rating-stars text-sm text-[#FFD700]">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <span class="text-xs text-[#A0A0A0] mr-auto">أسبوع</span>
+                </div>
+                <p class="text-[#A0A0A0] text-sm leading-relaxed">
+                    "خدمة فك الحظر ساعدتني كثيراً. كنت محظور من سناب ومكثت ٣ شهور، والآن الحساب رجع خلال ١٠ دقائق!"
+                </p>
+            </div>
+
+            <div class="snap-center shrink-0 w-[300px] stat-card">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#4cd137] to-[#44bd32] flex items-center justify-center text-white">
+                        <span class="font-bold">م</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">محمد الحربي</h4>
+                        <div class="rating-stars text-sm text-[#FFD700]">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <span class="text-xs text-[#A0A0A0] mr-auto">١٠ أيام</span>
+                </div>
+                <p class="text-[#A0A0A0] text-sm leading-relaxed">
+                    "يوتيوب بريميوم شغال تمام وبدون إعلانات، وفرتوا علي مبالغ كبيرة. شكراً لكم على المصداقية."
+                </p>
+            </div>
+
+            <div class="snap-center shrink-0 w-[300px] stat-card">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#9c88ff] to-[#8c7ae6] flex items-center justify-center text-white">
+                        <span class="font-bold">ر</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">ريما القحطاني</h4>
+                        <div class="rating-stars text-sm text-[#FFD700]">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <span class="text-xs text-[#A0A0A0] mr-auto">أسبوعين</span>
+                </div>
+                <p class="text-[#A0A0A0] text-sm leading-relaxed">
+                    "أول مرة أجرب متجر بلس وما خاب ظني. المتجر واضح وسهل والتعامل جداً راقي."
+                </p>
+            </div>
+
+            <div class="snap-center shrink-0 w-[300px] stat-card">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#e1b12c] to-[#fbc531] flex items-center justify-center text-white">
+                        <span class="font-bold">ف</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold">فيصل الشمري</h4>
+                        <div class="rating-stars text-sm text-[#FFD700]">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <span class="text-xs text-[#A0A0A0] mr-auto">شهر</span>
+                </div>
+                <p class="text-[#A0A0A0] text-sm leading-relaxed">
+                    "سرعة في الإنجاز، الكود وصلني واتساب وإيميل في نفس اللحظة. متجر يستحق الدعم."
+                </p>
+            </div>
+            
+        </div>
+        
+        <div class="flex justify-center gap-2 mt-4 md:hidden">
+            <div class="w-8 h-1 bg-[#9B111E] rounded-full"></div>
+            <div class="w-2 h-1 bg-gray-600 rounded-full"></div>
+            <div class="w-2 h-1 bg-gray-600 rounded-full"></div>
+        </div>
+    </div>
+</section>
+
+<div id="bottomBanner" class="container-spacing my-12">
+    </div>
+        <!-- سيتم ملؤه عبر JavaScript -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#0A0A0A] border-t border-[#333333]">
+        <div class="container-spacing py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- Column 1: About -->
+                <div class="footer-column">
+                    <div class="tech-font text-2xl mb-4">
+                        <span id="footerSiteName" class="text-[#9B111E]">IRON</span>
+                        <span class="text-[#FFD700]">+</span>
+                    </div>
+                    <p id="footerAbout" class="text-[#A0A0A0] text-sm leading-relaxed">
+                        منصة IRON+ الرائدة في توفير تطبيقات البلس والخدمات الرقمية بأعلى معايير الأمان والاستقرار. نسعى لجعل التكنولوجيا المتقدمة في متناول الجميع.
+                    </p>
+                    <div class="flex gap-4 mt-4">
+                        <a id="whatsappLink" href="#" class="w-10 h-10 rounded-full bg-[#1A1A1A] flex items-center justify-center hover:bg-[#25D366] transition-colors">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a id="snapchatLink" href="#" class="w-10 h-10 rounded-full bg-[#1A1A1A] flex items-center justify-center hover:bg-[#FFFC00] transition-colors">
+                            <i class="fab fa-snapchat"></i>
+                        </a>
+                        <a id="tiktokLink" href="#" class="w-10 h-10 rounded-full bg-[#1A1A1A] flex items-center justify-center hover:bg-[#000000] transition-colors">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a id="twitterLink" href="#" class="w-10 h-10 rounded-full bg-[#1A1A1A] flex items-center justify-center hover:bg-[#1DA1F2] transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Quick Links -->
+                <div class="footer-column">
+                    <h4 class="font-bold text-lg mb-4">روابط سريعة</h4>
+                    <div class="space-y-3">
+                        <a href="#home" class="text-[#A0A0A0] hover:text-[#FFD700] transition-colors flex items-center gap-2">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            الرئيسية
+                        </a>
+                        <a href="#products" class="text-[#A0A0A0] hover:text-[#FFD700] transition-colors flex items-center gap-2">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            جميع الباقات
+                        </a>
+                        <a href="#faq" class="text-[#A0A0A0] hover:text-[#FFD700] transition-colors flex items-center gap-2">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            الأسئلة الشائعة
+                        </a>
+                        <a href="#reviews" class="text-[#A0A0A0] hover:text-[#FFD700] transition-colors flex items-center gap-2">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            آراء العملاء
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Column 3: Policies -->
+                <div class="footer-column">
+                    <h4 class="font-bold text-lg mb-4">السياسات</h4>
+                    <div class="space-y-3">
+                        <a id="refundPolicyLink" href="#" class="text-[#A0A0A0] hover:text-[#FFD700] transition-colors flex items-center gap-2">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            سياسة الاسترجاع
+                        </a>
+                        <a id="termsLink" href="#" class="text-[#A0A0A0] hover:text-[#FFD700] transition-colors flex items-center gap-2">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            الشروط والأحكام
+                        </a>
+                        <a id="privacyLink" href="#" class="text-[#A0A0A0] hover:text-[#FFD700] transition-colors flex items-center gap-2">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            سياسة الخصوصية
+                        </a>
+                        <a id="aboutLink" href="#" class="text-[#A0A0A0] hover:text-[#FFD700] transition-colors flex items-center gap-2">
+                            <i class="fas fa-chevron-left text-xs"></i>
+                            من نحن
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Column 4: Certification & Payments -->
+                <div class="footer-column">
+                    <h4 class="font-bold text-lg mb-4">توثيق ودفع آمن</h4>
+                    
+                    <!-- Certification -->
+                    <div class="bg-[#1A1A1A] rounded-lg p-4 mb-6">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 rounded-full bg-[#9B111E]/20 flex items-center justify-center">
+                                <i class="fas fa-shield-check text-[#FFD700]"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm">متجر موثق ومعتمد</div>
+                                <div class="text-xs text-[#A0A0A0]">رقم السجل: 226493</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                 <div>
+                        <p class="text-sm text-[#A0A0A0] mb-3">طرق الدفع المتاحة:</p>
+                        <div class="flex flex-wrap gap-3">
+                            <div class="w-12 h-8 bg-white rounded flex items-center justify-center">
+                                <span class="font-bold text-black text-xs">مدى</span>
+                            </div>
+                            <div class="w-12 h-8 bg-black rounded flex items-center justify-center border border-[#333]">
+                                <i class="fab fa-apple-pay text-xl text-white"></i>
+                            </div>
+                            <div class="w-12 h-8 bg-gradient-to-r from-[#1434CB] to-[#1A5FEC] rounded flex items-center justify-center">
+                                <i class="fab fa-cc-visa text-xl text-white"></i>
+                            </div>
+                            <div class="w-12 h-8 bg-gradient-to-r from-[#00B9F2] to-[#00A0DC] rounded flex items-center justify-center">
+                                <span class="font-bold text-white text-xs">STC</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-[#333] mt-12 pt-8 text-center">
+                <p class="text-[#A0A0A0] text-sm">
+                    © 2024 IRON+. جميع الحقوق محفوظة. تصميم وتطوير بفخر من قبل فريق IRON+
+                </p>
+                <p class="text-xs text-[#666] mt-2">
+                    IRON+ OS v5.5 | نظام التشغيل المتقدم لتطبيقات البلس
+                </p>
+            </div>
+        </div>
+    </footer>
+
+  <div id="liveNotification" class="live-notification hidden">
+    <div class="w-10 h-10 rounded-full bg-[#9B111E]/20 flex items-center justify-center">
+        <i class="fas fa-bolt text-[#FFD700]"></i>
+    </div>
+    <div>
+        <div class="font-medium text-sm" id="notifTitle">مستخدم جديد اشترى الآن!</div>
+        <div class="text-xs text-[#A0A0A0]" id="notifText">محمد اشترى باقة سناب بلس</div>
+    </div>
+    <button onclick="closeNotification()" class="mr-auto text-[#A0A0A0] hover:text-white">
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+
+<div id="productModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-sm">
+    <div class="bg-[#1A1A1A] border border-[#333] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in duration-300">
+        <button onclick="closeProductModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white text-2xl z-10">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <div id="modalImageContainer" class="h-64 md:h-full bg-[#111] flex items-center justify-center border-b md:border-b-0 md:border-l border-[#333]">
+            </div>
+
+            <div class="p-8">
+                <div id="modalCategory" class="text-[#FFD700] text-xs font-bold mb-2 tracking-widest uppercase">باقة مميزة</div>
+                <h2 id="modalName" class="tech-font text-3xl font-bold mb-4 text-white">اسم المنتج</h2>
+                
+                <div class="flex items-center gap-2 mb-6">
+                    <div id="modalStars" class="text-[#FFD700] flex gap-1"></div>
+                    <span id="modalRating" class="text-gray-400 text-sm"></span>
+                </div>
+
+                <p id="modalDescription" class="text-[#A0A0A0] leading-relaxed mb-8 text-lg">
+                    وصف المنتج المفصل...
+                </p>
+
+                <div class="mb-8">
+                    <h4 class="text-white font-bold mb-4">مميزات الباقة:</h4>
+                    <ul id="modalFeatures" class="space-y-3 text-gray-300">
+                    </ul>
+                </div>
+                <div class="flex items-center justify-between pt-6 border-t border-[#333]">
+                    <div>
+                        <div class="text-gray-400 text-sm mb-1">السعر النهائي:</div>
+                        <div class="flex items-baseline gap-1">
+                            <span id="modalPrice" class="text-3xl font-bold text-[#FFD700]">0.00</span>
+                            <span class="text-sm text-[#A0A0A0]">ر.س</span>
+                        </div>
+                    </div>
+                    <button id="modalAddBtn" class="btn-primary px-8 py-4 rounded-xl font-bold flex items-center gap-3">
+                        <i class="fas fa-cart-plus"></i>
+                        أضف للسلة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

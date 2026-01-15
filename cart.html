@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRON+ | سلة المشتريات 🛒</title>
+    <meta name="description" content="سلة مشترياتك في IRON+ - تفعيل فوري تطبيقات بلس، فك حظر سناب، واشتراكات رقمية">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <style>
+        .cart-container {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cart-item {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item:hover {
+            background: rgba(155, 17, 30, 0.05);
+        }
+        
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .quantity-display {
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .remove-btn {
+            color: #ff6b6b;
+            transition: all 0.2s;
+        }
+        
+        .remove-btn:hover {
+            color: #ff3838;
+            transform: scale(1.1);
+        }
+        
+        .summary-card {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .coupon-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: white;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .coupon-input:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1);
+        }
+        
+        .coupon-btn {
+            background: linear-gradient(135deg, #9B111E 0%, #7A0D17 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .coupon-btn:hover {
+            background: linear-gradient(135deg, #7A0D17 0%, #9B111E 100%);
+            transform: translateY(-2px);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .empty-cart-icon {
+            font-size: 64px;
+            color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .cart-item {
+            animation: slideIn 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased bg-[#0A0A0A] text-white">
+    <nav class="nav-container sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <a href="index.html" class="tech-font text-2xl">
+                        <span class="text-[#9B111E]">IRON</span>
+                        <span class="text-[#FFD700]">+</span>
+                    </a>
+                    <span class="text-xs px-2 py-1 rounded-full bg-[#9B111E]/10 text-[#9B111E] border border-[#9B111E]/20">
+                        v5.5
+                    </span>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-sm font-medium hover:text-[#FFD700] transition-colors">الرئيسية</a>
+                    <a href="index.html#products" class="text-sm font-medium hover:text-[#FFD700] transition-colors">الباقات</a>
+                    <a href="index.html#features" class="text-sm font-medium hover:text-[#FFD700] transition-colors">المميزات</a>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <a href="cart.html" class="relative p-2">
+                        <i class="fas fa-shopping-bag text-lg"></i>
+                        <span id="cartCount" class="cart-count absolute -top-1 -right-1 bg-[#9B111E] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    </a>
+                    <div id="userInfo" class="hidden items-center gap-3">
+                        <div class="user-avatar w-8 h-8 rounded-full bg-gradient-to-br from-[#9B111E] to-[#FFD700] flex items-center justify-center">
+                            <i class="fas fa-user-astronaut text-xs"></i>
+                        </div>
+                        <div class="user-details">
+                            <span id="userPhone" class="text-[#FFD700] block font-bold text-sm"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-12">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <h1 class="tech-font text-3xl md:text-4xl font-bold mb-8 text-center">
+                <i class="fas fa-shopping-cart text-[#FFD700] ml-2"></i>
+                سلة المشتريات
+            </h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="cart-container">
+                        <h2 class="text-xl font-bold mb-6 text-[#FFD700] border-b border-gray-800 pb-3">
+                            <i class="fas fa-box-open ml-2"></i>
+                            المنتجات المختارة
+                        </h2>
+                        
+                        <div id="cartItems">
+                            </div>
+                        
+                        <div id="emptyCartMessage" class="empty-cart hidden">
+                            <div class="empty-cart-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-300 mb-3">سلة المشتريات فارغة</h3>
+                            <p class="text-gray-500 mb-8">لم تقم بإضافة أي منتجات بعد</p>
+                            <a href="index.html#products" class="btn-primary inline-flex items-center">
+                                <i class="fas fa-arrow-right ml-2"></i>
+                                تصفح الباقات
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-1">
+                    <div class="summary-card">
+                        <h2 class="text-xl font-bold mb-6 text-[#FFD700] border-b border-gray-800 pb-3">
+                            <i class="fas fa-receipt ml-2"></i>
+                            ملخص الطلب
+                        </h2>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400">المجموع الفرعي</span>
+                                <span id="subtotal" class="font-bold">0.00 ر.س</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-400">الضريبة المضافة</span>
+                                <span id="tax" class="font-bold">0.00 ر.س</span>
+                            </div>
+                            
+                            <div id="discountSection" class="hidden">
+                                <div class="flex justify-between items-center text-green-500">
+                                    <span>الخصم</span>
+                                    <span id="discountAmount" class="font-bold">-0.00 ر.س</span>
+                                </div>
+                            </div>
+                            
+                            <div class="border-t border-gray-800 pt-4 mt-4">
+                                <div class="flex justify-between items-center text-lg">
+                                    <span class="font-bold">الإجمالي</span>
+                                    <span id="total" class="text-2xl font-bold text-[#FFD700]">0.00 ر.س</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm mb-2 text-gray-400">كود الخصم (إن وجد)</label>
+                            <div class="flex gap-2 mb-2">
+                                <input type="text" 
+                                       id="couponCode" 
+                                       class="coupon-input flex-1" 
+                                       placeholder="أدخل الكود هنا"
+                                       maxlength="20">
+                                <button onclick="applyCoupon()" class="coupon-btn">
+                                    تطبيق
+                                </button>
+                            </div>
+                            <div id="couponMessage" class="text-sm mt-2 hidden"></div>
+                            
+                            <div id="couponDetails" class="hidden mt-4 p-3 bg-gradient-to-r from-green-900/20 to-green-800/10 border border-green-800/30 rounded-lg">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm text-gray-300">الكوبون المطبق:</span>
+                                    <span id="appliedCouponCode" class="font-bold text-green-400"></span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-300">قيمة الخصم:</span>
+                                    <span id="couponDiscount" class="font-bold text-green-400"></span>
+                                </div>
+                                <button onclick="removeCoupon()" class="text-xs text-red-400 hover:text-red-300 mt-2">
+                                    <i class="fas fa-times ml-1"></i>
+                                    إزالة الكوبون
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-sm mb-2 text-gray-400">الاسم الكامل</label>
+                            <div class="flex gap-2">
+                                <input type="text" 
+                                       id="customerName" 
+                                       class="coupon-input flex-1" 
+                                       placeholder="اكتب اسمك الثلاثي"
+                                       required>
+                            </div>
+                            <p class="text-[10px] text-gray-500 mt-1">يُرجى كتابة الاسم لضمان سرعة تفعيل الطلب</p>
+                        </div>
+                        
+                        <button id="checkoutButton" 
+                                onclick="checkout()" 
+                                class="btn-primary w-full py-4 text-lg font-bold flex items-center justify-center gap-2"
+                                disabled>
+                            <i class="fas fa-lock"></i>
+                            إتمام الطلب
+                        </button>
+                        
+                        <div class="mt-6 text-sm text-gray-400 space-y-2">
+                            <p class="flex items-center gap-2">
+                                <i class="fas fa-info-circle text-[#FFD700]"></i>
+                                سيصلك كود التفعيل فور اكتمال عملية الدفع.
+                            </p>
+                            <p class="flex items-center gap-2">
+                                <i class="fas fa-shield-alt text-[#FFD700]"></i>
+                                عملية الدفع مشفرة وآمنة 100%.
+                            </p>
+                            <p class="flex items-center gap-2">
+                                <i class="fas fa-headset text-[#FFD700]"></i>
+                                الدعم الفني متاح 24/7 عبر الواتساب.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#0A0A0A] border-t border-[#333333] mt-12">
+        <div class="container mx-auto px-4 py-12">
+            <div class="text-center">
+                <div class="tech-font text-2xl mb-4">
+                    <span class="text-[#9B111E]">IRON</span>
+                    <span class="text-[#FFD700]">+</span>
+                </div>
+                <p class="text-[#A0A0A0] text-sm">
+                    © 2024 IRON+. جميع الحقوق محفوظة. تصميم وتطوير بفخر من قبل فريق IRON+
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script>
+        // ========================================
+        // نظام سلة المشتريات IRON+ v5.5 🛒
+        // ========================================
+        
+        let currentCart = [];
+        let appliedCoupon = null;
+        let siteSettings = null;
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🛒 Cart System Initializing v5.5...');
+            
+            try {
+                await loadSiteSettings();
+                await checkUserStatus();
+                await loadCart();
+                setupEventListeners();
+                updateCartCount();
+            } catch (error) {
+                console.error('❌ Failed to initialize cart:', error);
+                showNotification('حدث خطأ في تحميل السلة', 'error');
+            }
+        });
+        
+        // تحميل إعدادات الموقع
+        async function loadSiteSettings() {
+            try {
+                if (!window.ironPlus) return;
+                
+                const res = await window.ironPlus.getSiteSettings();
+                if (res.success) {
+                    siteSettings = res.settings;
+                }
+            } catch (error) {
+                console.error('Error loading site settings:', error);
+            }
+        }
+        
+        // التحقق من حالة المستخدم
+        async function checkUserStatus() {
+            try {
+                if (!window.ironPlus) return;
+                
+                const isLoggedIn = window.ironPlus.isLoggedIn();
+                const userPhone = window.ironPlus.getUserPhone();
+                updateUserUI(isLoggedIn, userPhone);
+                
+                if (!isLoggedIn) {
+                    showNotification('يرجى تسجيل الدخول لإتمام الطلب', 'warning');
+                    setTimeout(() => {
+                        window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error('Error checking user status:', error);
+            }
+        }
+        
+        function updateUserUI(isLoggedIn, userPhone) {
+            const userInfo = document.getElementById('userInfo');
+            const userPhoneDisplay = document.getElementById('userPhone');
+        
+            if (isLoggedIn && userPhone) {
+                if (userInfo) userInfo.style.display = 'flex';
+                if (userPhoneDisplay) userPhoneDisplay.textContent = userPhone;
+            } else {
+                if (userInfo) userInfo.style.display = 'none';
+            }
+        }
+        
+        // تحميل السلة
+        async function loadCart() {
+            try {
+                if (window.ironPlus && window.ironPlus.getCart) {
+                    const res = await window.ironPlus.getCart();
+                    if (res.success) {
+                        currentCart = res.cart;
+                    }
+                } else {
+                    currentCart = JSON.parse(localStorage.getItem('iron_cart')) || [];
+                }
+                
+                renderCartItems();
+                updateCartSummary();
+                
+                // تحميل الكوبون المطبق إذا وجد
+                const savedCoupon = localStorage.getItem('applied_coupon');
+                if (savedCoupon) {
+                    try {
+                        appliedCoupon = JSON.parse(savedCoupon);
+                        updateCouponDisplay();
+                    } catch (e) {
+                        console.error('Error parsing saved coupon:', e);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading cart:', error);
+                currentCart = [];
+                renderCartItems();
+            }
+        }
+        
+        // عرض عناصر السلة
+        function renderCartItems() {
+            const container = document.getElementById('cartItems');
+            const emptyCartMsg = document.getElementById('emptyCartMessage');
+            const checkoutBtn = document.getElementById('checkoutButton');
+        
+            if (currentCart.length === 0) {
+                if (container) container.innerHTML = '';
+                if (emptyCartMsg) emptyCartMsg.style.display = 'block';
+                if (checkoutBtn) checkoutBtn.disabled = true;
+                return;
+            }
+        
+            if (emptyCartMsg) emptyCartMsg.style.display = 'none';
+            if (checkoutBtn) checkoutBtn.disabled = false;
+        
+            if (container) {
+                container.innerHTML = currentCart.map((item, index) => `
+                    <div class="cart-item">
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <div class="md:w-32 h-32 bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] rounded-lg flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="${getProductIcon(item.category)} text-4xl" style="color: ${getProductColor(item.category)}"></i>
+                                    <div class="text-xs text-gray-400 mt-2">${item.category || 'منتج'}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-1">${item.name}</h3>
+                                        ${item.duration ? `
+                                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">
+                                                ${item.duration}
+                                            </span>
+                                        ` : ''}
+                                    </div>
+                                    <button onclick="removeFromCart(${index})" class="remove-btn" title="حذف من السلة">
+                                        <i class="fas fa-trash text-xl"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <button onclick="updateQuantity(${index}, -1)" class="quantity-btn">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <span class="quantity-display mx-4">${item.quantity || 1}</span>
+                                        <button onclick="updateQuantity(${index}, 1)" class="quantity-btn">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="text-right">
+                                        <div class="text-2xl font-bold text-[#FFD700]">
+                                            ${formatPrice(item.price * (item.quantity || 1))} ر.س
+                                        </div>
+                                        <div class="text-sm text-gray-400">
+                                            ${formatPrice(item.price)} ر.س للقطعة
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        
+            updateCartCount();
+        }
+        
+        function getProductIcon(category) {
+            if (category === 'snap') return 'fab fa-snapchat-ghost';
+            if (category === 'tiktok') return 'fab fa-tiktok';
+            if (category === 'youtube') return 'fab fa-youtube';
+            return 'fas fa-mobile-alt';
+        }
+        
+        function getProductColor(category) {
+            if (category === 'snap') return '#FFFC00';
+            if (category === 'tiktok') return '#000000';
+            if (category === 'youtube') return '#FF0000';
+            return '#FFD700';
+        }
+        
+        function formatPrice(price) {
+            if (!price && price !== 0) return '0.00';
+            return (parseFloat(price) / 100).toLocaleString('ar-SA', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+        
+        // تحديث الكمية
+        async function updateQuantity(index, change) {
+            if (currentCart[index]) {
+                currentCart[index].quantity = (currentCart[index].quantity || 1) + change;
+                
+                if (currentCart[index].quantity < 1) {
+                    currentCart.splice(index, 1);
+                }
+                
+                await saveCart();
+                renderCartItems();
+                updateCartSummary();
+            }
+        }
+        
+        // حذف منتج من السلة
+        async function removeFromCart(index) {
+            if (confirm('هل تريد حذف هذا المنتج من السلة؟')) {
+                currentCart.splice(index, 1);
+                await saveCart();
+                renderCartItems();
+                updateCartSummary();
+            }
+        }
+        
+        // حفظ السلة
+        async function saveCart() {
+            try {
+                if (window.ironPlus && window.ironPlus.updateCartItem) {
+                    // حفظ عبر API
+                    localStorage.setItem('iron_cart', JSON.stringify(currentCart));
+                } else {
+                    localStorage.setItem('iron_cart', JSON.stringify(currentCart));
+                }
+                updateCartCount();
+            } catch (error) {
+                console.error('Error saving cart:', error);
+            }
+        }
+        
+        // تحديث ملخص الطلب
+        async function updateCartSummary() {
+            if (currentCart.length === 0) {
+                updateSummaryDisplay(0, 0, 0, 0);
+                return;
+            }
+        
+            let subtotal = 0;
+            currentCart.forEach(item => {
+                const price = item.price || 0;
+                const quantity = item.quantity || 1;
+                subtotal += price * quantity;
+            });
+            
+            // استخدام نسبة الضريبة من الإعدادات
+            const taxRate = siteSettings?.tax_rate || 15;
+            const tax = subtotal * (taxRate / 100);
+            const totalBeforeDiscount = subtotal + tax;
+            
+            let discount = 0;
+            let finalTotal = totalBeforeDiscount;
+            
+            // تطبيق الكوبون إذا كان مطبقاً
+            if (appliedCoupon) {
+                if (appliedCoupon.discount_type === 'percentage') {
+                    discount = totalBeforeDiscount * (appliedCoupon.discount_value / 100);
+                } else {
+                    discount = appliedCoupon.discount_value;
+                }
+                
+                // التأكد من ألا يتجاوز الخصم الإجمالي
+                if (discount > totalBeforeDiscount) {
+                    discount = totalBeforeDiscount;
+                }
+                
+                finalTotal = totalBeforeDiscount - discount;
+            }
+            
+            updateSummaryDisplay(subtotal, tax, discount, finalTotal);
+        }
+        
+        function updateSummaryDisplay(subtotal, tax, discount, total) {
+            document.getElementById('subtotal').textContent = formatPrice(subtotal) + ' ر.س';
+            document.getElementById('tax').textContent = formatPrice(tax) + ' ر.س';
+            document.getElementById('total').textContent = formatPrice(total) + ' ر.س';
+            
+            const discountSection = document.getElementById('discountSection');
+            const discountAmount = document.getElementById('discountAmount');
+            
+            if (discount > 0) {
+                discountSection.classList.remove('hidden');
+                discountAmount.textContent = '-' + formatPrice(discount) + ' ر.س';
+            } else {
+                discountSection.classList.add('hidden');
+            }
+        }
+        
+        // تطبيق الكوبون
+        async function applyCoupon() {
+            const codeInput = document.getElementById('couponCode');
+            const code = codeInput.value.trim();
+            const messageDiv = document.getElementById('couponMessage');
+            
+            if (!code) {
+                showMessage(messageDiv, 'يرجى إدخال كود الخصم', 'error');
+                return;
+            }
+            
+            // إخفاء أي رسالة سابقة
+            messageDiv.style.display = 'none';
+            
+            // حساب الإجمالي الحالي
+            let subtotal = 0;
+            currentCart.forEach(item => {
+                subtotal += (item.price || 0) * (item.quantity || 1);
+            });
+            
+            const taxRate = siteSettings?.tax_rate || 15;
+            const tax = subtotal * (taxRate / 100);
+            const totalBeforeDiscount = subtotal + tax;
+            
+            try {
+                let couponData;
+                
+                if (window.ironPlus && window.ironPlus.validateCoupon) {
+                    const res = await window.ironPlus.validateCoupon(code, totalBeforeDiscount);
+                    if (res.success) {
+                        couponData = {
+                            code: res.coupon.code,
+                            discount_type: res.coupon.discount_type,
+                            discount_value: res.coupon.discount_value,
+                            discount_amount: res.discount
+                        };
+                    } else {
+                        showMessage(messageDiv, res.message, 'error');
+                        return;
+                    }
+                } else {
+                    // محاكاة الكوبون للتنمية
+                    if (code.toUpperCase() === 'IRON50') {
+                        couponData = {
+                            code: 'IRON50',
+                            discount_type: 'percentage',
+                            discount_value: 50,
+                            discount_amount: totalBeforeDiscount * 0.5
+                        };
+                    } else if (code.toUpperCase() === 'IRON100') {
+                        couponData = {
+                            code: 'IRON100',
+                            discount_type: 'fixed',
+                            discount_value: 10000, // 100 ريال
+                            discount_amount: 10000
+                        };
+                    } else {
+                        showMessage(messageDiv, 'كود الخصم غير صحيح', 'error');
+                        return;
+                    }
+                }
+                
+                appliedCoupon = couponData;
+                localStorage.setItem('applied_coupon', JSON.stringify(appliedCoupon));
+                updateCouponDisplay();
+                updateCartSummary();
+                
+                showMessage(messageDiv, 'تم تطبيق الكوبون بنجاح! 🎉', 'success');
+                codeInput.value = '';
+                
+            } catch (error) {
+                console.error('Coupon error:', error);
+                showMessage(messageDiv, 'حدث خطأ في التحقق من الكوبون', 'error');
+            }
+        }
+        
+        function updateCouponDisplay() {
+            const couponDetails = document.getElementById('couponDetails');
+            const appliedCouponCode = document.getElementById('appliedCouponCode');
+            const couponDiscount = document.getElementById('couponDiscount');
+            
+            if (appliedCoupon) {
+                couponDetails.classList.remove('hidden');
+                appliedCouponCode.textContent = appliedCoupon.code;
+                
+                if (appliedCoupon.discount_type === 'percentage') {
+                    couponDiscount.textContent = `${appliedCoupon.discount_value}% خصم`;
+                } else {
+                    couponDiscount.textContent = `-${formatPrice(appliedCoupon.discount_value)} ر.س`;
+                }
+            } else {
+                couponDetails.classList.add('hidden');
+            }
+        }
+        
+        function removeCoupon() {
+            if (confirm('هل تريد إزالة الكوبون المطبق؟')) {
+                appliedCoupon = null;
+                localStorage.removeItem('applied_coupon');
+                updateCouponDisplay();
+                updateCartSummary();
+                
+                const messageDiv = document.getElementById('couponMessage');
+                showMessage(messageDiv, 'تم إزالة الكوبون', 'info');
+            }
+        }
+        
+        function showMessage(element, text, type) {
+            if (!element) return;
+            element.innerHTML = text;
+            element.className = `text-sm mt-2 ${type === 'success' ? 'text-green-500' : type === 'error' ? 'text-red-500' : 'text-yellow-500'}`;
+            element.style.display = 'block';
+            
+            if (type !== 'error') {
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // إتمام الطلب
+        async function checkout() {
+            const nameInput = document.getElementById('customerName');
+            const name = nameInput ? nameInput.value.trim() : '';
+
+            // التأكد من كتابة الاسم
+            if (!name) {
+                showNotification('يرجى كتابة الاسم الكامل أولاً', 'warning');
+                nameInput.focus();
+                return;
+            }
+
+            if (currentCart.length === 0) {
+                showNotification('سلة المشتريات فارغة', 'warning');
+                return;
+            }
+            
+            // التحقق من تسجيل الدخول
+            if (!window.ironPlus || !window.ironPlus.isLoggedIn()) {
+                showNotification('يرجى تسجيل الدخول لإتمام الطلب', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+                }, 1500);
+                return;
+            }
+            
+            // حساب المبلغ الإجمالي
+            let subtotal = 0;
+            currentCart.forEach(item => {
+                subtotal += (item.price || 0) * (item.quantity || 1);
+            });
+            
+            const taxRate = siteSettings?.tax_rate || 15;
+            const tax = subtotal * (taxRate / 100);
+            let total = subtotal + tax;
+            
+            // تطبيق الكوبون إذا وجد
+            if (appliedCoupon) {
+                let discount = 0;
+                if (appliedCoupon.discount_type === 'percentage') {
+                    discount = total * (appliedCoupon.discount_value / 100);
+                } else {
+                    discount = appliedCoupon.discount_value;
+                }
+                total -= discount;
+            }
+            
+            // إذا كان الطلب مجاني بعد الخصم
+            if (total <= 0) {
+                await createFreeOrder();
+                return;
+            }
+            
+            // إذا كان هناك مبلغ مدفوع، نوجه إلى بوابة الدفع ونرسل الاسم
+            await redirectToPayment(total, name);
+        }
+        
+        async function createFreeOrder() {
+            try {
+                showNotification('جاري إنشاء طلبك المجاني...', 'info');
+                
+                if (window.ironPlus && window.ironPlus.createOrderFromCart) {
+                    const phone = window.ironPlus.getUserPhone();
+                    const couponCode = appliedCoupon ? appliedCoupon.code : null;
+                    
+                    const res = await window.ironPlus.createOrderFromCart(phone, couponCode);
+                    
+                    if (res.success) {
+                        if (res.redirectToPayment) {
+                            // يجب أن لا يحدث هذا في الطلب المجاني
+                            throw new Error('Unexpected payment redirect');
+                        }
+                        
+                        showNotification('تم إنشاء طلبك بنجاح! ✅', 'success');
+                        
+                        // توجيه إلى صفحة النجاح
+                        setTimeout(() => {
+                            window.location.href = 'success.html?order_id=' + (res.orders?.[0]?.id || 'free');
+                        }, 1500);
+                    } else {
+                        throw new Error(res.message);
+                    }
+                } else {
+                    // محاكاة للتنمية
+                    showNotification('تم إنشاء طلبك المجاني بنجاح! ✅', 'success');
+                    
+                    // مسح السلة
+                    currentCart = [];
+                    await saveCart();
+                    appliedCoupon = null;
+                    localStorage.removeItem('applied_coupon');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'success.html?order_id=free_demo';
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Free order error:', error);
+                showNotification('حدث خطأ في إنشاء الطلب المجاني', 'error');
+            }
+        }
+        
+        async function redirectToPayment(total, name) {
+            try {
+                showNotification('جاري توجيهك إلى بوابة الدفع...', 'info');
+                
+                if (window.ironPlus && window.ironPlus.createPayment) {
+                    // نأخذ أول منتج في السلة (يمكن تطوير النظام لدعم مشتريات متعددة)
+                    const firstItem = currentCart[0];
+                    const phone = window.ironPlus.getUserPhone();
+                    
+                    // نرسل الاسم كبارامتر رابع لدالة createPayment
+                    const res = await window.ironPlus.createPayment(firstItem.id, phone, total, name);
+                    
+                    if (res.success && res.data.url) {
+                        // مسح السلة والكوبون
+                        currentCart = [];
+                        await saveCart();
+                        appliedCoupon = null;
+                        localStorage.removeItem('applied_coupon');
+                        
+                        // التوجيه إلى بوابة الدفع
+                        window.location.href = res.data.url;
+                    } else {
+                        throw new Error('Failed to create payment');
+                    }
+                } else {
+                    // محاكاة للتنمية
+                    showNotification('جاري محاكاة عملية الدفع...', 'info');
+                    
+                    setTimeout(() => {
+                        // مسح السلة
+                        currentCart = [];
+                        saveCart();
+                        appliedCoupon = null;
+                        localStorage.removeItem('applied_coupon');
+                        
+                        showNotification('تمت عملية الدفع بنجاح! ✅', 'success');
+                        
+                        setTimeout(() => {
+                            window.location.href = 'success.html?order_id=test_' + Date.now();
+                        }, 1000);
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error('Payment redirect error:', error);
+                showNotification('حدث خطأ في توجيه الدفع', 'error');
+            }
+        }
+        
+        // أدوات مساعدة
+        function updateCartCount() {
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const totalItems = currentCart.reduce((total, item) => total + (item.quantity || 1), 0);
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+        }
+        
+        function setupEventListeners() {
+            // إدخال كود الخصم عند الضغط على Enter
+            const couponInput = document.getElementById('couponCode');
+            if (couponInput) {
+                couponInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        applyCoupon();
+                    }
+                });
+            }
+        }
+        
+        function showNotification(message, type = 'info', duration = 4000) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm ${
+                type === 'success' ? 'bg-green-900/90 border-green-700' :
+                type === 'error' ? 'bg-red-900/90 border-red-700' :
+                type === 'warning' ? 'bg-yellow-900/90 border-yellow-700' :
+                'bg-blue-900/90 border-blue-700'
+            } border`;
+            
+            let icon = '';
+            switch (type) {
+                case 'success':
+                    icon = 'fa-check-circle';
+                    break;
+                case 'error':
+                    icon = 'fa-times-circle';
+                    break;
+                case 'warning':
+                    icon = 'fa-exclamation-triangle';
+                    break;
+                default:
+                    icon = 'fa-info-circle';
+            }
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${icon} mr-3 text-xl"></i>
+                    <span class="flex-1">${message}</span>
+                    <button class="ml-4 text-gray-300 hover:text-white" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, duration);
+            }
+        }
+        
+        // تصدير الدوال للاستخدام العام
+        window.cartSystem = {
+            updateQuantity,
+            removeFromCart,
+            applyCoupon,
+            removeCoupon,
+            checkout
+        };
+        
+        console.log('🛒 Cart system v5.5 loaded successfully!');
+    </script>
+</body>
+</html>
